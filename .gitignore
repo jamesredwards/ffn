@@ -61,3 +61,6 @@ docs/_build/
 
 # css files
 docs/source/_themes/klink/static/css
+
+# vscode
+.vscode/

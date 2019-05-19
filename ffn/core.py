@@ -20,12 +20,12 @@ except ImportError:
 
 # avoid pyplot import failure in headless environment
 import os
-import matplotlib
+#import matplotlib
 
-if 'DISPLAY' not in os.environ:
-    matplotlib.use('agg', warn=False)
+# if 'DISPLAY' not in os.environ:
+#     matplotlib.use('agg', warn=False)
 
-from matplotlib import pyplot as plt  # noqa
+# from matplotlib import pyplot as plt  # noqa
 
 
 class PerformanceStats(object):
@@ -488,52 +488,52 @@ class PerformanceStats(object):
         else:
             return '%s %s %s' % (name, get_freq_name(freq), kind)
 
-    def plot(self, freq=None, figsize=(15, 5), title=None,
-             logy=False, **kwargs):
-        """
-        Helper function for plotting the series.
+    # def plot(self, freq=None, figsize=(15, 5), title=None,
+    #          logy=False, **kwargs):
+    #     """
+    #     Helper function for plotting the series.
 
-        Args:
-            * freq (str): Data frequency used for display purposes.
-                Refer to pandas docs for valid freq strings.
-            * figsize ((x,y)): figure size
-            * title (str): Title if default not appropriate
-            * logy (bool): log-scale for y axis
-            * kwargs: passed to pandas' plot method
-        """
-        if title is None:
-            title = self._get_default_plot_title(
-                self.name, freq, 'Price Series')
+    #     Args:
+    #         * freq (str): Data frequency used for display purposes.
+    #             Refer to pandas docs for valid freq strings.
+    #         * figsize ((x,y)): figure size
+    #         * title (str): Title if default not appropriate
+    #         * logy (bool): log-scale for y axis
+    #         * kwargs: passed to pandas' plot method
+    #     """
+    #     if title is None:
+    #         title = self._get_default_plot_title(
+    #             self.name, freq, 'Price Series')
 
-        ser = self._get_series(freq)
-        ser.plot(figsize=figsize, title=title, logy=logy, **kwargs)
+    #     ser = self._get_series(freq)
+    #     ser.plot(figsize=figsize, title=title, logy=logy, **kwargs)
 
-    def plot_histogram(self, freq=None, figsize=(15, 5), title=None,
-                       bins=20, **kwargs):
-        """
-        Plots a histogram of returns given a return frequency.
+    # def plot_histogram(self, freq=None, figsize=(15, 5), title=None,
+    #                    bins=20, **kwargs):
+    #     """
+    #     Plots a histogram of returns given a return frequency.
 
-        Args:
-            * freq (str): Data frequency used for display purposes.
-                This will dictate the type of returns
-                (daily returns, monthly, ...)
-                Refer to pandas docs for valid period strings.
-            * figsize ((x,y)): figure size
-            * title (str): Title if default not appropriate
-            * bins (int): number of bins for the histogram
-            * kwargs: passed to pandas' hist method
-        """
-        if title is None:
-            title = self._get_default_plot_title(
-                self.name, freq, 'Return Histogram')
+    #     Args:
+    #         * freq (str): Data frequency used for display purposes.
+    #             This will dictate the type of returns
+    #             (daily returns, monthly, ...)
+    #             Refer to pandas docs for valid period strings.
+    #         * figsize ((x,y)): figure size
+    #         * title (str): Title if default not appropriate
+    #         * bins (int): number of bins for the histogram
+    #         * kwargs: passed to pandas' hist method
+    #     """
+    #     if title is None:
+    #         title = self._get_default_plot_title(
+    #             self.name, freq, 'Return Histogram')
 
-        ser = self._get_series(freq).to_returns().dropna()
+    #     ser = self._get_series(freq).to_returns().dropna()
 
-        plt.figure(figsize=figsize)
-        ax = ser.hist(bins=bins, figsize=figsize, normed=True, **kwargs)
-        ax.set_title(title)
-        plt.axvline(0, linewidth=4)
-        ser.plot(kind='kde')
+    #     plt.figure(figsize=figsize)
+    #     ax = ser.hist(bins=bins, figsize=figsize, normed=True, **kwargs)
+    #     ax.set_title(title)
+    #     plt.axvline(0, linewidth=4)
+    #     ser.plot(kind='kde')
 
     def _get_series(self, freq):
         if freq is None:
@@ -810,91 +810,91 @@ class GroupStats(dict):
         return self.lookback_returns.apply(
             lambda x: x.map('{:,.2%}'.format), axis=1)
 
-    def plot(self, freq=None, figsize=(15, 5), title=None,
-             logy=False, **kwargs):
-        """
-        Helper function for plotting the series.
+    # def plot(self, freq=None, figsize=(15, 5), title=None,
+    #          logy=False, **kwargs):
+    #     """
+    #     Helper function for plotting the series.
 
-        Args:
-            * freq (str): Data frequency used for display purposes.
-                Refer to pandas docs for valid freq strings.
-            * figsize ((x,y)): figure size
-            * title (str): Title if default not appropriate
-            * logy (bool): log-scale for y axis
-            * kwargs: passed to pandas' plot method
+    #     Args:
+    #         * freq (str): Data frequency used for display purposes.
+    #             Refer to pandas docs for valid freq strings.
+    #         * figsize ((x,y)): figure size
+    #         * title (str): Title if default not appropriate
+    #         * logy (bool): log-scale for y axis
+    #         * kwargs: passed to pandas' plot method
 
-        """
+    #     """
 
-        if title is None:
-            title = self._get_default_plot_title(
-                freq, 'Equity Progression')
+    #     if title is None:
+    #         title = self._get_default_plot_title(
+    #             freq, 'Equity Progression')
 
-        ser = self._get_series(freq).rebase()
-        ser.plot(figsize=figsize, logy=logy,
-                 title=title, **kwargs)
+    #     ser = self._get_series(freq).rebase()
+    #     ser.plot(figsize=figsize, logy=logy,
+    #              title=title, **kwargs)
 
-    def plot_scatter_matrix(self, freq=None, title=None,
-                            figsize=(10, 10), **kwargs):
-        """
-        Wrapper around pandas' scatter_matrix.
+    # def plot_scatter_matrix(self, freq=None, title=None,
+    #                         figsize=(10, 10), **kwargs):
+    #     """
+    #     Wrapper around pandas' scatter_matrix.
 
-        Args:
-            * freq (str): Data frequency used for display purposes.
-                Refer to pandas docs for valid freq strings.
-            * figsize ((x,y)): figure size
-            * title (str): Title if default not appropriate
-            * kwargs: passed to pandas' scatter_matrix method
+    #     Args:
+    #         * freq (str): Data frequency used for display purposes.
+    #             Refer to pandas docs for valid freq strings.
+    #         * figsize ((x,y)): figure size
+    #         * title (str): Title if default not appropriate
+    #         * kwargs: passed to pandas' scatter_matrix method
 
-        """
-        if title is None:
-            title = self._get_default_plot_title(
-                freq, 'Return Scatter Matrix')
+    #     """
+    #     if title is None:
+    #         title = self._get_default_plot_title(
+    #             freq, 'Return Scatter Matrix')
 
-        plt.figure()
-        ser = self._get_series(freq).to_returns().dropna()
-        pd.scatter_matrix(ser, figsize=figsize, **kwargs)
-        plt.suptitle(title)
+    #     plt.figure()
+    #     ser = self._get_series(freq).to_returns().dropna()
+    #     pd.scatter_matrix(ser, figsize=figsize, **kwargs)
+    #     plt.suptitle(title)
 
-    def plot_histograms(self, freq=None, title=None,
-                        figsize=(10, 10), **kwargs):
-        """
-        Wrapper around pandas' hist.
+    # def plot_histograms(self, freq=None, title=None,
+    #                     figsize=(10, 10), **kwargs):
+    #     """
+    #     Wrapper around pandas' hist.
 
-        Args:
-            * freq (str): Data frequency used for display purposes.
-                Refer to pandas docs for valid freq strings.
-            * figsize ((x,y)): figure size
-            * title (str): Title if default not appropriate
-            * kwargs: passed to pandas' hist method
+    #     Args:
+    #         * freq (str): Data frequency used for display purposes.
+    #             Refer to pandas docs for valid freq strings.
+    #         * figsize ((x,y)): figure size
+    #         * title (str): Title if default not appropriate
+    #         * kwargs: passed to pandas' hist method
 
-        """
-        if title is None:
-            title = self._get_default_plot_title(
-                freq, 'Return Histogram Matrix')
+    #     """
+    #     if title is None:
+    #         title = self._get_default_plot_title(
+    #             freq, 'Return Histogram Matrix')
 
-        plt.figure()
-        ser = self._get_series(freq).to_returns().dropna()
-        ser.hist(figsize=figsize, **kwargs)
-        plt.suptitle(title)
+    #     plt.figure()
+    #     ser = self._get_series(freq).to_returns().dropna()
+    #     ser.hist(figsize=figsize, **kwargs)
+    #     plt.suptitle(title)
 
-    def plot_correlation(self, freq=None, title=None,
-                         figsize=(12, 6), **kwargs):
-        """
-        Utility function to plot correlations.
+    # def plot_correlation(self, freq=None, title=None,
+    #                      figsize=(12, 6), **kwargs):
+    #     """
+    #     Utility function to plot correlations.
 
-        Args:
-            * freq (str): Pandas data frequency alias string
-            * title (str): Plot title
-            * figsize (tuple (x,y)): figure size
-            * kwargs: passed to Pandas' plot_corr_heatmap function
+    #     Args:
+    #         * freq (str): Pandas data frequency alias string
+    #         * title (str): Plot title
+    #         * figsize (tuple (x,y)): figure size
+    #         * kwargs: passed to Pandas' plot_corr_heatmap function
 
-        """
-        if title is None:
-            title = self._get_default_plot_title(
-                freq, 'Return Correlation Matrix')
+    #     """
+    #     if title is None:
+    #         title = self._get_default_plot_title(
+    #             freq, 'Return Correlation Matrix')
 
-        rets = self._get_series(freq).to_returns().dropna()
-        return rets.plot_corr_heatmap(title=title, figsize=figsize, **kwargs)
+    #     rets = self._get_series(freq).to_returns().dropna()
+    #     return rets.plot_corr_heatmap(title=title, figsize=figsize, **kwargs)
 
     def _get_series(self, freq):
         if freq is None:
@@ -1817,59 +1817,59 @@ def random_weights(n, bounds=(0., 1.), total=1.0):
     return w
 
 
-def plot_heatmap(data, title='Heatmap', show_legend=True,
-                 show_labels=True, label_fmt='.2f',
-                 vmin=None, vmax=None,
-                 figsize=None, label_color='w',
-                 cmap='RdBu', **kwargs):
-    """
-    Plot a heatmap using matplotlib's pcolor.
+# def plot_heatmap(data, title='Heatmap', show_legend=True,
+#                  show_labels=True, label_fmt='.2f',
+#                  vmin=None, vmax=None,
+#                  figsize=None, label_color='w',
+#                  cmap='RdBu', **kwargs):
+#     """
+#     Plot a heatmap using matplotlib's pcolor.
 
-    Args:
-        * data (DataFrame): DataFrame to plot. Usually small matrix (ex.
-            correlation matrix).
-        * title (string): Plot title
-        * show_legend (bool): Show color legend
-        * show_labels (bool): Show value labels
-        * label_fmt (str): Label format string
-        * vmin (float): Min value for scale
-        * vmax (float): Max value for scale
-        * cmap (string): Color map
-        * kwargs: Passed to matplotlib's pcolor
+#     Args:
+#         * data (DataFrame): DataFrame to plot. Usually small matrix (ex.
+#             correlation matrix).
+#         * title (string): Plot title
+#         * show_legend (bool): Show color legend
+#         * show_labels (bool): Show value labels
+#         * label_fmt (str): Label format string
+#         * vmin (float): Min value for scale
+#         * vmax (float): Max value for scale
+#         * cmap (string): Color map
+#         * kwargs: Passed to matplotlib's pcolor
 
-    """
-    fig, ax = plt.subplots(figsize=figsize)
+#     """
+#     fig, ax = plt.subplots(figsize=figsize)
 
-    heatmap = ax.pcolor(data, vmin=vmin, vmax=vmax, cmap=cmap)
-    # for some reason heatmap has the y values backwards....
-    ax.invert_yaxis()
+#     heatmap = ax.pcolor(data, vmin=vmin, vmax=vmax, cmap=cmap)
+#     # for some reason heatmap has the y values backwards....
+#     ax.invert_yaxis()
 
-    if title is not None:
-        plt.title(title)
+#     if title is not None:
+#         plt.title(title)
 
-    if show_legend:
-        fig.colorbar(heatmap)
+#     if show_legend:
+#         fig.colorbar(heatmap)
 
-    if show_labels:
-        vals = data.values
-        for x in range(data.shape[0]):
-            for y in range(data.shape[1]):
-                plt.text(x + 0.5, y + 0.5, format(vals[y, x], label_fmt),
-                         horizontalalignment='center',
-                         verticalalignment='center',
-                         color=label_color)
+#     if show_labels:
+#         vals = data.values
+#         for x in range(data.shape[0]):
+#             for y in range(data.shape[1]):
+#                 plt.text(x + 0.5, y + 0.5, format(vals[y, x], label_fmt),
+#                          horizontalalignment='center',
+#                          verticalalignment='center',
+#                          color=label_color)
 
-    plt.yticks(np.arange(0.5, len(data.index), 1), data.index)
-    plt.xticks(np.arange(0.5, len(data.columns), 1), data.columns)
+#     plt.yticks(np.arange(0.5, len(data.index), 1), data.index)
+#     plt.xticks(np.arange(0.5, len(data.columns), 1), data.columns)
 
-    return plt
+#     return plt
 
 
-def plot_corr_heatmap(data, **kwargs):
-    """
-    Plots the correlation heatmap for a given DataFrame.
-    """
-    return plot_heatmap(data.corr(), vmin=-1, vmax=1, **kwargs)
+# def plot_corr_heatmap(data, **kwargs):
+#     """
+#     Plots the correlation heatmap for a given DataFrame.
+#     """
+#     return plot_heatmap(data.corr(), vmin=-1, vmax=1, **kwargs)
 
 
 def rollapply(data, window, fn):
@@ -2092,8 +2092,8 @@ def extend_pandas():
     PandasObject.calc_clusters = calc_clusters
     PandasObject.calc_ftca = calc_ftca
     PandasObject.calc_stats = calc_stats
-    PandasObject.plot_heatmap = plot_heatmap
-    PandasObject.plot_corr_heatmap = plot_corr_heatmap
+    # PandasObject.plot_heatmap = plot_heatmap
+    # PandasObject.plot_corr_heatmap = plot_corr_heatmap
     PandasObject.rollapply = rollapply
     PandasObject.winsorize = winsorize
     PandasObject.rescale = rescale
