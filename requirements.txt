@@ -1,6 +1,3 @@
 future
-ipython
 tabulate
 decorator
-scikit-learn
-coverage
