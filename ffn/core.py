@@ -1618,11 +1618,11 @@ def calc_clusters(returns, n=None, plot=False):
             if result[1] > 0.9:
                 break
 
-    if plot:
-        fig, ax = plt.subplots()
-        ax.scatter(xy[:, 0], xy[:, 1], c=result[2], s=90)
-        for i, txt in enumerate(returns.columns):
-            ax.annotate(txt, (xy[i, 0], xy[i, 1]), size=14)
+    # if plot:
+        # fig, ax = plt.subplots()
+        # ax.scatter(xy[:, 0], xy[:, 1], c=result[2], s=90)
+        # for i, txt in enumerate(returns.columns):
+        #     ax.annotate(txt, (xy[i, 0], xy[i, 1]), size=14)
 
     # sanitize return value
     tmp = result[0]
